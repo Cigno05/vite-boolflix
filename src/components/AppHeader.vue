@@ -1,9 +1,16 @@
 <template>
-    <div>
-        <h1>Header</h1>
-        <input type="text" v-model="store.searchText" @keyup.enter="fetchMovieCard()">
+    
+        <div class="navbar bg-body-tertiary">
+            <div class="container-lg">
+                <a class="navbar-brand">Boolflix</a>
+                <form class="d-flex" @submit.prevent="fetchMovieCard()" >
+                    <input class="form-control me-2" type="text" v-model="store.searchText" placeholder="Search" >
+                </form>
+            </div>
+        </div>
+        <!-- <input type="text" v-model="store.searchText" @keyup.enter="fetchMovieCard()" placeholder="Search" > -->
 
-    </div>
+    
 </template>
 
 <script>
@@ -18,6 +25,7 @@ export default {
 
         }
     },
+    
     methods: {
         fetchMovieCard() {
             let query = this.store.searchText
@@ -44,6 +52,7 @@ export default {
 
                 })
         },
+
 
     },
 }
