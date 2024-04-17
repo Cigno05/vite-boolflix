@@ -1,18 +1,21 @@
 <template>
-        <li>
-            <div class="card mb-4" >
-                <!-- <img src="" class="card-img-top" alt="..."> -->
-                <div class="card-body">
-                    <h5 class="card-title">{{ item.title }}</h5>
-                    <p class="card-text">{{ item.overview }}</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Titolo originale: {{ item.original_title }}</li>
-                    <li class="list-group-item">Lingua originale: <img :src="lenguafeImgSrc" alt=""><span>{{ lenguageString }}</span></li>
-                    <li class="list-group-item">Voto medio: {{ voteAverage }}</li>
-                </ul>
+    
+    <li>
+        <div class="card mb-4">
+            <img :src="`https://image.tmdb.org/t/p/w342${this.item.poster_path}`" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+                <p class="card-text">{{ item.overview }}</p>
             </div>
-        </li>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Titolo originale: {{ item.original_title ?? item.original_name }}</li>
+                <li class="list-group-item">Lingua originale: <img :src="lenguageImgSrc" alt=""><span>{{ lenguageString
+                        }}</span></li>
+                <li class="list-group-item">Voto medio: {{ voteAverage }}</li>
+                <!-- <li class="list-group-item">Genere: Film</li> -->
+            </ul>
+        </div>
+    </li>
 </template>
 
 <script>
@@ -22,7 +25,7 @@ export default {
     props: {
         item: {
             type: Object,
-            required: true 
+            required: true
         },
     },
     data() {
@@ -40,14 +43,14 @@ export default {
             const voteStar = star.repeat(vote) + emptyStar.repeat((5 - vote))
             return voteStar
         },
-        lenguafeImgSrc() {
+        lenguageImgSrc() {
             let src
 
             if (this.item.original_language === 'en' || this.item.original_language === 'it' || this.item.original_language === 'es' || this.item.original_language === 'ja') {
                 src = `/img/${this.item.original_language}.png`
                 // console.log('flag')
             }
-            
+
             return src
         },
         lenguageString() {
@@ -58,12 +61,25 @@ export default {
             } else {
                 string = this.item.original_language
             }
-            
+
             return string
-        }
+        },
+        posterImgSrc() {
+            const poster = '';
+            if (this.item.poster_path !== '') {
+                poster = `https://image.tmdb.org/t/p/w342${this.item.poster_path}`;
+            }
+            
+
+            return poster
+        },
     },
 }
 </script>
 
-
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.card {
+    width: 250px;
+    height: 100%;
+}
+</style>
