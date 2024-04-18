@@ -18,10 +18,12 @@
                         </li>
                         <li class="item">Titolo originale: {{ item.original_title ?? item.original_name }}
                         </li>
-                        <li class="item">Lingua originale: <img :src="lenguageImgSrc" alt=""><span>{{
-                            lenguageString
-                                }}</span></li>
-                        <li class="item">Voto medio: {{ voteAverage }}</li>
+                        <li class="item">Lingua originale: <img :src="lenguageImgSrc" alt=""><span>{{ lenguageString }}</span></li>
+                        <ul class="d-flex p-0 justify-content-center gap-2">
+                            <li v-for="star in Math.floor(item.vote_average / 2)" :key="star"><font-awesome-icon :icon="['fas', 'star']" /></li>
+                            <li v-for="star in (5 - Math.floor(item.vote_average / 2))" :key="star"><font-awesome-icon :icon="['far', 'star']" /></li>
+                            
+                        </ul>
 
                     </ul>
                 </div>
@@ -37,8 +39,8 @@ export default {
     props: {
         item: {
             type: Object,
-            required: true
-
+            required: true,
+            
         },
     },
     data() {
@@ -48,23 +50,6 @@ export default {
         }
     },
     computed: {
-        voteAverage() {
-            const vote = Math.floor(this.item.vote_average / 2)
-            // console.log(vote)
-            const star = 'x'
-            const emptyStar = 'o'
-            const voteStar = star.repeat(vote) + emptyStar.repeat((5 - vote))
-            return voteStar
-        },
-        // lenguageSearchInArray() {
-        //     const lenguages = ['es', 'it', 'es', 'ja']
-        //     let thereIs
-        //     if (lenguages.inludes(this.item.original_language)) {
-        //         thereIs = 'trovato'
-        //     }
-        //     console.log(thereIs)
-        //     return thereIs
-        // },
         lenguageImgSrc() {
             let src
 
