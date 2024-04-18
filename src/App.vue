@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app__content">
     <AppHeader />
     <AppContents />
   </div>
@@ -30,5 +30,7 @@ export default {
 <style lang="scss">
 @use './style/general';
 @use 'bootstrap';
+
+
 
 </style>

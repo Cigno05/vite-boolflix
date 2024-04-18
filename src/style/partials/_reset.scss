@@ -2,3 +2,25 @@ ul,
 ol {
     list-style: none;
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+::-webkit-scrollbar-track {
+    background: #050505; 
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background: #050505; 
+    border-radius: 5px;
+    border: 1px solid #505050;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #232323; 
+}
+
+body {
+    background-color: #232323;
+}

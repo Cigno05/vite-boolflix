@@ -1,19 +1,31 @@
 <template>
-    
+
     <li>
-        <div class="card mb-4">
-            <img :src="`https://image.tmdb.org/t/p/w342${this.item.poster_path}`" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">{{ item.title }}</h5>
-                <p class="card-text">{{ item.overview }}</p>
+        <div class="card-image mb-4">
+
+            <img :src="posterImgSrc" class="card-img-top" alt="...">
+
+            <div class="card-image overlay">
+
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="item">
+                            <h3>{{ item.title ?? item.name }}</h3>
+                        </li>
+                        <li class="item" v-if="item.overview !== ''">
+                            <h5>Descrizione:</h5>
+                            <p>{{ item.overview }}</p>
+                        </li>
+                        <li class="item">Titolo originale: {{ item.original_title ?? item.original_name }}
+                        </li>
+                        <li class="item">Lingua originale: <img :src="lenguageImgSrc" alt=""><span>{{
+                            lenguageString
+                                }}</span></li>
+                        <li class="item">Voto medio: {{ voteAverage }}</li>
+
+                    </ul>
+                </div>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Titolo originale: {{ item.original_title ?? item.original_name }}</li>
-                <li class="list-group-item">Lingua originale: <img :src="lenguageImgSrc" alt=""><span>{{ lenguageString
-                        }}</span></li>
-                <li class="list-group-item">Voto medio: {{ voteAverage }}</li>
-                <!-- <li class="list-group-item">Genere: Film</li> -->
-            </ul>
         </div>
     </li>
 </template>
@@ -26,6 +38,7 @@ export default {
         item: {
             type: Object,
             required: true
+
         },
     },
     data() {
@@ -43,6 +56,15 @@ export default {
             const voteStar = star.repeat(vote) + emptyStar.repeat((5 - vote))
             return voteStar
         },
+        // lenguageSearchInArray() {
+        //     const lenguages = ['es', 'it', 'es', 'ja']
+        //     let thereIs
+        //     if (lenguages.inludes(this.item.original_language)) {
+        //         thereIs = 'trovato'
+        //     }
+        //     console.log(thereIs)
+        //     return thereIs
+        // },
         lenguageImgSrc() {
             let src
 
@@ -65,21 +87,58 @@ export default {
             return string
         },
         posterImgSrc() {
-            const poster = '';
-            if (this.item.poster_path !== '') {
-                poster = `https://image.tmdb.org/t/p/w342${this.item.poster_path}`;
+            let poster = `https://image.tmdb.org/t/p/w342${this.item.poster_path}`;
+            if (this.item.poster_path === null) {
+                poster = `/img/imgNotFound.png`;
             }
-            
 
+            // `https://image.tmdb.org/t/p/w342${this.item.poster_path}`
             return poster
         },
+
+
     },
 }
 </script>
 
 <style lang="scss" scoped>
-.card {
+.card-image {
     width: 250px;
-    height: 100%;
+    height: 400px;
+    background-color: black;
+    color: white;
+    position: relative;
+    border-radius: 5px;
+
+    &>img {
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    li {
+        background-color: #232323;
+        color: white;
+    }
+}
+
+
+.card-image.overlay {
+    position: absolute;
+    opacity: 0;
+    overflow-y: auto;
+    top: 0;
+
+    background-color: #232323;
+
+    &:hover {
+        opacity: 0.85;
+    }
+}
+
+.item {
+    img {
+        width: 25px;
+    }
 }
 </style>
